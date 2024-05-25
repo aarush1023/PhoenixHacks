@@ -20,10 +20,10 @@ def draw_landmarks_on_image(rgb_image, detection_result: mp.tasks.vision.HandLan
    """Courtesy of https://github.com/googlesamples/mediapipe/blob/main/examples/hand_landmarker/python/hand_landmarker.ipynb"""
    try:
       if detection_result.hand_landmarks == []:
-         print(0)
+         #print(0)
          return rgb_image
       else:
-         print(1)
+         #print(1)
          hand_landmarks_list = detection_result.hand_landmarks
         #  print(hand_landmarks_list,len(hand_landmarks_list))
          handedness_list = detection_result.handedness
@@ -47,7 +47,7 @@ def draw_landmarks_on_image(rgb_image, detection_result: mp.tasks.vision.HandLan
 
          return annotated_image
    except:
-      print(3)
+      #print(3)
       return rgb_image
 
 def write_landmarks_to_csv(landmarks, csv_file):
@@ -93,7 +93,7 @@ landmarker=HandLandmarker.create_from_options(options)
 while True:
     success, image=cap.read()
     if not success:
-        print("Ignoring empty camera frame.")
+        #print("Ignoring empty camera frame.")
         continue
     temp_image = cv2.flip(image, 1)
     # with HandLandmarker.create_from_options(options) as landmarker:
@@ -102,7 +102,7 @@ while True:
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=temp_image)
     landmarkerResults=landmarker.detect_async(image=mp_image, timestamp_ms=int(time.time() * 1000))
     temp_image=draw_landmarks_on_image(temp_image,HandLandmarkerResult)
-    print(HandLandmarkerResult)
+    #print(HandLandmarkerResult)
        
 
    
