@@ -60,6 +60,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 options = HandLandmarkerOptions(
     base_options=BaseOptions(model_asset_path='hand_landmarker.task'),
     running_mode=VisionRunningMode.LIVE_STREAM,
+    num_hands=1,
     result_callback=print_result)
 landmarker = HandLandmarker.create_from_options(options)
 print("HELLO")
@@ -72,10 +73,11 @@ while True:
     #print(ret)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
     print("1")
-    landmarker.detect_async(mp_image, int(time.time() - start))
+    start += 1
+    landmarker.detect_async(mp_image, int(start))
     print("2")
-    # annotated_image = draw_landmarks_on_image(mp_image.numpy_view(), HandLandmarkerResult)
-    cv2.imshow('chigga', cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
+    annotated_image = draw_landmarks_on_image(mp_image.numpy_view(), HandLandmarkerResult)
+    cv2.imshow('chigga', annotated_image)
     # cv2.imshow('bals', frame)
     if(cv2.waitKey(1) == ord('q')):
         break
